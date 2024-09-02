@@ -1,4 +1,4 @@
-package starter.dashboard;
+package otros.dashboard;
 import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.questions.TextContent;
 

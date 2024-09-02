@@ -1,4 +1,4 @@
-package starter.dashboard;
+package otros.dashboard;
 
 import org.openqa.selenium.By;
 
