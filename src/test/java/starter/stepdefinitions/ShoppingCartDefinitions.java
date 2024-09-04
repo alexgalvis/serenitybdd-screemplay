@@ -5,15 +5,13 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
+import starter.questions.IsOrderConfirmed;
 import starter.questions.IsUserLoggedIn;
+import starter.questions.OrdenTotal;
 import starter.questions.ShoppingCartItemCount;
-import starter.tasks.DoLogin;
-import starter.tasks.NavigateTo;
-import starter.tasks.ProceedToCheckout;
-import starter.tasks.addProductsToCard;
+import starter.tasks.*;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -70,5 +68,28 @@ public class ShoppingCartDefinitions {
                 ProceedToCheckout.withData(lastName,postalCode)
         );
 
+    }
+
+    @Then("the purchase total must be correct {double}")
+    public void thePurchaseTotalMustBeCorrect(double totalBalance) {
+        theActorInTheSpotlight().should(
+                seeThat("the total is correct",
+                        OrdenTotal.dispayed(),equalTo(totalBalance))
+        );
+
+    }
+
+    @When("^(.*) completes the purchase$")
+    public void alexCompletesThePurchase(String actor) {
+        theActorCalled(actor).attemptsTo(
+                CompletePurchase.andComplete()
+        );
+    }
+
+    @Then("^the purchase must be confirmed with the text (.*)$")
+    public void thePurchaseMustBeConfirmedWithTheTextOrderSuccessful(String title) {
+        theActorInTheSpotlight().should(
+                seeThat("The order was successfully confirmed", IsOrderConfirmed.title(),equalTo(title))
+        );
     }
 }
